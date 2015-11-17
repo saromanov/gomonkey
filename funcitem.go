@@ -1,6 +1,7 @@
 package gomonkey
 
 import (
+	"./gen"
 	"fmt"
 	"reflect"
 )
@@ -34,8 +35,24 @@ func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
 	}
 	result := []reflect.Value{}
 	var i uint
+	typevalue := reflect.TypeOf(fi.Data)
 	for i = 0; i < fi.Count; i++ {
-
+		newargs := []reflect.Value{}
+		for j, arg := range args {
+			switch arg {
+			case reflect.Slice:
+				fmt.Println(typevalue.In(int(j)).Elem())
+				break
+			case reflect.Int:
+				genint := gen.GenInt{}
+				value, _ := genint.GenerateOne()
+				newargs = append(newargs, reflect.Value(value))
+				break
+			case reflect.String:
+				fmt.Println("STRING")
+				break
+			}
+		}
 	}
 
 	return result, nil
