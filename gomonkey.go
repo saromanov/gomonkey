@@ -29,7 +29,7 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		}
 
 		items := funcitem.generate(args)
-		items.call(item, items)
+		mon.call(item, items)
 	}
 	return nil
 }
