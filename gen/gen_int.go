@@ -3,7 +3,6 @@ package gen
 import (
 "fmt"
 "math/rand"
-"time"
 )
 
 type GenInt struct {
@@ -14,6 +13,8 @@ func (gen* GenInt) Generate(i int) ([]int, error) {
 	if i == 0 {
 		return []int{}, fmt.Errorf("Number of examples, must be > 0")
 	}
+
+	return []int{}, nil
 
 }
 
