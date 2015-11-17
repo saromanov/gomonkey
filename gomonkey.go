@@ -28,7 +28,10 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 			return err
 		}
 
-		items := funcitem.generate(args)
+		items, err := funcitem.generate(args)
+		if err != nil {
+			return err
+		}
 		mon.call(item, items)
 	}
 	return nil

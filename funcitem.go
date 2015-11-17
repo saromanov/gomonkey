@@ -10,7 +10,7 @@ import (
 type FuncItem struct {
 	Data  interface{}
 	Value reflect.Value
-	Count int
+	Count uint
 }
 
 func (fi *FuncItem) getArgumentTypes() ([]reflect.Kind, error) {
@@ -27,10 +27,16 @@ func (fi *FuncItem) getArgumentTypes() ([]reflect.Kind, error) {
 	return args, nil
 }
 
-func (fi *FuncItem) generate(args []reflect.Kind) []reflect.Value {
-	for i := 0; i < fi.Count; i++ {
+// generate provides generation of lists of arguments
+func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
+	if fi.Count == 0 {
+		return nil, fmt.Errorf("Count must be > 0")
+	}
+	result := []reflect.Value{}
+	var i uint
+	for i = 0; i < fi.Count; i++ {
 
 	}
 
-	return nil
+	return result, nil
 }
