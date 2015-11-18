@@ -9,7 +9,7 @@ import (
 )
 
 type GoMonkey struct {
-	// path can be path to the dir or path to the file
+	// Path can be path to the dir or path to the file
 	Path string
 }
 
