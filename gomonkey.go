@@ -4,6 +4,8 @@ import (
 	"fmt"
 	//"os"
 	"reflect"
+	"sync"
+	//"time"
 )
 
 type GoMonkey struct {
@@ -32,9 +34,16 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		if err != nil {
 			return err
 		}
+		var wg sync.WaitGroup
+		wg.Add(len(items))
+		// TODO: If function is fails, write to storage list of arguments
 		for _, arg := range items {
-			value.Call(arg)
+			go func() {
+				value.Call(arg)
+				wg.Done()
+			}()
 		}
+		wg.Wait()
 	}
 	return nil
 }
