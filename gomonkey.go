@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"sync"
 	//"time"
+	"./backend"
 )
 
 type GoMonkey struct {
@@ -34,10 +35,13 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		if err != nil {
 			return err
 		}
+
+		backendstore := backend.FileBackend{Path: "current"}
 		var wg sync.WaitGroup
 		wg.Add(len(items))
 		// TODO: If function is fails, write to storage list of arguments
 		for _, arg := range items {
+			backendstore.Write("1", arg)
 			go func() {
 				value.Call(arg)
 				wg.Done()
