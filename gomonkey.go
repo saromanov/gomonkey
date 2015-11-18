@@ -32,13 +32,10 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		if err != nil {
 			return err
 		}
-		mon.call(item, items)
+		for _, arg := range items {
+			value.Call(arg)
+		}
 	}
 	return nil
 }
 
-
-// call function with arguments
-func (mon *GoMonkey) call(item interface{}, args []reflect.Value) {
-
-}
