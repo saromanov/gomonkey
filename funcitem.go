@@ -41,7 +41,12 @@ func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
 		for j, arg := range args {
 			switch arg {
 			case reflect.Slice:
-				fmt.Println(typevalue.In(int(j)).Elem())
+				switch typevalue.In(int(j)).Elem().Kind() {
+				case reflect.Int:
+					genint := gen.GenInt{}
+					value, _ := genint.Generate(10)
+					newargs = append(newargs, reflect.ValueOf(value))
+				}
 				break
 			case reflect.Int:
 				genint := gen.GenInt{}
