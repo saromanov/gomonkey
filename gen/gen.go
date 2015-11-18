@@ -8,7 +8,7 @@ type Gen interface {
 
 	String() string
 
-	// DefaultRiles provides some default items 
+	// DefaultRiles provides some default items
 	// for each type of generation
 	DefaultRules()
 }
