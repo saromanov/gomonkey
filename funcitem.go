@@ -29,11 +29,11 @@ func (fi *FuncItem) getArgumentTypes() ([]reflect.Kind, error) {
 }
 
 // generate provides generation of lists of arguments
-func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
+func (fi *FuncItem) generate(args []reflect.Kind) ([][]reflect.Value, error) {
 	if fi.Count == 0 {
 		return nil, fmt.Errorf("Count must be > 0")
 	}
-	result := []reflect.Value{}
+	result := [][]reflect.Value{}
 	var i uint
 	typevalue := reflect.TypeOf(fi.Data)
 	for i = 0; i < fi.Count; i++ {
@@ -58,6 +58,7 @@ func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
 				break
 			}
 		}
+		result = append(result, newargs)
 	}
 
 	return result, nil
