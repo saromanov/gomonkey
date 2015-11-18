@@ -22,3 +22,7 @@ func (gen* GenInt) Generate(i int) ([]int, error) {
 func (gem *GenInt) GenerateOne() (int, error) {
 	return rand.Intn(100000000), nil
 }
+
+func (gem *GenInt) DefaultRiles()[]int {
+	return []int{0,-1}
+}
