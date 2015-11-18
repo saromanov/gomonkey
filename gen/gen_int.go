@@ -9,11 +9,19 @@ type GenInt struct {
 
 }
 
-func (gen* GenInt) Generate(i int) ([]int, error) {
-	if i == 0 {
+func (gen* GenInt) Generate(n int) ([]int, error) {
+	if n == 0 {
 		return []int{}, fmt.Errorf("Number of examples, must be > 0")
 	}
 
+	result := []int{}
+	for i := 0; i < n; i++ {
+		num, err := gen.GenerateOne()
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, num)
+	}
 	return []int{}, nil
 
 }
