@@ -46,7 +46,7 @@ func (fi *FuncItem) generate(args []reflect.Kind) ([]reflect.Value, error) {
 			case reflect.Int:
 				genint := gen.GenInt{}
 				value, _ := genint.GenerateOne()
-				newargs = append(newargs, reflect.Value(value))
+				newargs = append(newargs, reflect.ValueOf(value))
 				break
 			case reflect.String:
 				fmt.Println("STRING")
