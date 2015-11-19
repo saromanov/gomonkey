@@ -18,6 +18,7 @@ func GenTestsByName(fu string) {
 
 }
 
+// GeтTests provides generation and testing target method
 func (mon *GoMonkey) GenTests(item interface{}) error {
 	value := reflect.ValueOf(item)
 	if !value.IsValid() {
