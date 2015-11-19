@@ -5,6 +5,7 @@ import (
 	//"os"
 	"reflect"
 	"sync"
+	"strconv"
 	//"time"
 	"./backend"
 )
@@ -41,8 +42,8 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		var wg sync.WaitGroup
 		wg.Add(len(items))
 		// TODO: If function is fails, write to storage list of arguments
-		for _, arg := range items {
-			backendstore.Write("1", arg)
+		for i, arg := range items {
+			backendstore.Write(strconv.Itoa(i), arg)
 			go func() {
 				value.Call(arg)
 				wg.Done()
