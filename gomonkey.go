@@ -12,6 +12,9 @@ import (
 type GoMonkey struct {
 	// Path can be path to the dir or path to the file
 	Path string
+
+	// Backend for store arguments if session is crached
+	Backendstore backend.Backend 
 }
 
 func GenTestsByName(fu string) {
@@ -37,12 +40,12 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 			return err
 		}
 
-		backendstore := backend.FileBackend{Path: "current"}
+		mon.setBackend()
 		var count int
 		count = 0
 		// TODO: If function is fails, write to storage list of arguments
 		for i, arg := range items {
-			backendstore.Write(strconv.Itoa(i), arg)
+			mon.Backendstore.Write(strconv.Itoa(i), arg)
 			count++
 			value.Call(arg)
 		}
@@ -50,5 +53,11 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 		fmt.Println(fmt.Sprintf("Total number of tests: %d", count))
 	}
 	return nil
+}
+
+func (mon *GoMonkey) setBackend() {
+	if mon.Backendstore == nil {
+		mon.Backendstore = backend.FileBackend{Path: "current"}
+	}
 }
 
