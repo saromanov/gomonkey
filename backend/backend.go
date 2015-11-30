@@ -8,7 +8,7 @@ import (
 type Backend interface {
 
 	// Write provides writing arguments to backend
-	Write(title string, data []reflect.Value)
+	Write(title string, data []reflect.Value) error
 
 	// Get returns arguments for testing func by title
 	Get(title string)[]reflect.Value

@@ -11,7 +11,7 @@ type FileBackend struct {
 }
 
 // Write provides writing arguments to file
-func (fb *FileBackend) Write(title string, data []reflect.Value) error{
+func (fb FileBackend) Write(title string, data []reflect.Value) error{
 	result := map[string][]reflect.Value{}
 	result[title] = data
 	ser, errmar := json.Marshal(result)
@@ -30,12 +30,12 @@ func (fb *FileBackend) Write(title string, data []reflect.Value) error{
 }
 
 // read provides reading arguments from file
-func (fb *FileBackend) Read(title string) []reflect.Value {
+func (fb FileBackend) Get(title string) []reflect.Value {
 	return []reflect.Value{}
 }
 
 // Strring returns name of backend
-func (fb *FileBackend) String() string{
+func (fb FileBackend) String() string{
 	return "filebackend"
 }
 
