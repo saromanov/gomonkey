@@ -40,16 +40,21 @@ func (mon *GoMonkey) GenTests(item interface{}) error {
 
 		backendstore := backend.FileBackend{Path: "current"}
 		var wg sync.WaitGroup
+		var count int
+		count = 0
 		wg.Add(len(items))
 		// TODO: If function is fails, write to storage list of arguments
 		for i, arg := range items {
 			backendstore.Write(strconv.Itoa(i), arg)
+			count++
 			go func() {
 				value.Call(arg)
 				wg.Done()
 			}()
 		}
 		wg.Wait()
+		fmt.Println("All tests are passed")
+		fmt.Println(fmt.Sprintf("Total number of tests: %d", count))
 	}
 	return nil
 }
