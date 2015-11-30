@@ -3,6 +3,7 @@ package gen
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 type GenInt struct {
@@ -13,6 +14,7 @@ func (gen *GenInt) Generate(n int) ([]int, error) {
 		return []int{}, fmt.Errorf("Number of examples, must be > 0")
 	}
 
+	rand.Seed(time.Now().UTC().UnixNano())
 	result := []int{}
 	for i := 0; i < n; i++ {
 		num, err := gen.GenerateOne()
