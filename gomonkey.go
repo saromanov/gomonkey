@@ -5,8 +5,14 @@ import (
 	//"os"
 	"reflect"
 	"strconv"
+	"sync"
+	"errors"
 	//"time"
 	"./backend"
+)
+
+var (
+	errEmptyFuncs = errors.New("Empty list of functions for testing")
 )
 
 type GoMonkey struct {
@@ -15,14 +21,36 @@ type GoMonkey struct {
 
 	// Backend for store arguments if session is crached
 	Backendstore backend.Backend 
+
+	items []interface{}
 }
 
 func GenTestsByName(fu string) {
 
 }
 
+func (mon *GoMonkey) Add(item interface {}) {
+	mon.items = append(mon.items, item)
+}
+
+func (mon *GoMonkey) Start() error {
+	if len(mon.items) == 0 {
+		return errEmptyFuncs
+	}
+	var wait sync.WaitGroup
+	wait.Add(len(mon.items))
+	for _, item := range mon.items {
+		go func(it interface{}){
+			mon.genTests(it)
+			wait.Done()
+		}(item)
+	}
+	wait.Wait()
+	return nil
+}
+
 // GeтTests provides generation and testing target method
-func (mon *GoMonkey) GenTests(item interface{}) error {
+func (mon *GoMonkey) genTests(item interface{}) error {
 	value := reflect.ValueOf(item)
 	if !value.IsValid() {
 		return fmt.Errorf("Item is invalid")
