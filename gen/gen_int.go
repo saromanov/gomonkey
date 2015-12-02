@@ -17,11 +17,16 @@ func (gen *GenInt) Generate(n int) ([]int, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	result := []int{}
 	for i := 0; i < n; i++ {
+
 		num, err := gen.GenerateOne()
 		if err != nil {
 			return nil, err
 		}
-		result = append(result, num)
+		if rand.Intn(10) % 2 == 0 {
+			result = append(result, num)
+		} else {
+			result = append(result, negative(num))
+		}
 	}
 	return result, nil
 
@@ -29,9 +34,33 @@ func (gen *GenInt) Generate(n int) ([]int, error) {
 
 //GenerateOne provodes generation of one examples
 func (gem *GenInt) GenerateOne() (int, error) {
-	return rand.Intn(100000000), nil
+	value := rand.Intn(3)
+	if value == 0 {
+		return gem.generateOneSmall(), nil
+	}
+	if value == 1 {
+		return gem.generateOneAvg(), nil
+	}
+
+	return gem.generateOneBig(), nil
+}
+
+func (gem *GenInt) generateOneBig() int {
+	return rand.Intn(100000000)
+}
+
+func (gem *GenInt) generateOneAvg() int {
+	return rand.Intn(1000000)
+}
+
+func (gem *GenInt) generateOneSmall() int {
+	return rand.Intn(1000)
 }
 
 func (gem *GenInt) DefaultRiles() []int {
 	return []int{0, -1}
+}
+
+func negative(num int) int {
+	return -num
 }
